@@ -14,6 +14,8 @@ class RoyaltiesDovuteWindow(tk.Toplevel):
         self.title("Royalties dovute")
         self.resizable(False, False)
 
+        self.artisti_percentuali = artisti_percentuali
+
         self.data_tree = ttk.Treeview(self, columns=("Artista", "Royalties Dovute"), show="headings")
         self.data_tree.heading("Artista", text="Artista")
         self.data_tree.heading("Royalties Dovute", text="Royalties Dovute")
@@ -81,10 +83,14 @@ class AppRoyalties(tk.Tk):
             self.file_entry.insert(0, file_path)
 
     def importa_dati(self):
-        file_path = self.file_entry.get()
-        distributore = self.distributore_combo.get()
+        file_path = filedialog.askopenfilename(filetypes=[("CSV Files", "*.csv")])
+        if not file_path:
+            return
 
-        if not file_path or not distributore:
+        if self.distributore_var.get() == "Fuga Music":
+            self.df_master, self.artisti_percentuali = distributori.importa_dati_fuga(file_path, self.df_master, self.artisti_percentuali)
+ 
+         if not file_path or not distributore:
             messagebox.showerror("Errore", "Seleziona un file CSV e un distributore.")
             return
 
@@ -95,7 +101,7 @@ class AppRoyalties(tk.Tk):
         elif distributore == "Universal":
             importa_dati_universal(file_path)
 
-    def genera_report(self):
+    def genera_report(self, artisti_percentuali):
         semestre = self.semestre_combo.get()
         if semestre == "":
             messagebox.showerror("Errore", "Seleziona un semestre.")
