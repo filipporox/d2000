@@ -6,6 +6,11 @@ import os
 from report_window import ReportWindow
 from royalties_dovute_window import RoyaltiesDovuteWindow
 from distributori import importa_dati_fuga, importa_dati_artist_first, importa_dati_universal
+import datetime
+
+artisti_percentuali = {}
+df_master = pd.DataFrame()
+
 
 class RoyaltiesDovuteWindow(tk.Toplevel):
     def __init__(self, parent, df_royalties_dovute):
@@ -99,7 +104,7 @@ class AppRoyalties(tk.Tk):
         elif distributore == "Universal":
             importa_dati_universal(file_path)
 
-    def genera_report(self, artisti_percentuali):
+    def genera_report(self):
         semestre = self.semestre_combo.get()
         if semestre == "":
             messagebox.showerror("Errore", "Seleziona un semestre.")
