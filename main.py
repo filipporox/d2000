@@ -85,17 +85,9 @@ class AppRoyalties(tk.Tk):
             self.file_entry.insert(0, file_path)
 
     def importa_dati(self):
-        file_path = filedialog.askopenfilename(filetypes=[("CSV Files", "*.csv")])
-        if not file_path:
-            return
-
         if self.distributore_var.get() == "Fuga Music":
             self.df_master, self.artisti_percentuali = distributori.importa_dati_fuga(file_path, self.df_master, self.artisti_percentuali)
  
-        if not file_path or not distributore:
-            messagebox.showerror("Errore", "Seleziona un file CSV e un distributore.")
-            return
-
         if distributore == "Fuga":
             importa_dati_fuga(file_path, self.df_master, self.artisti_percentuali)
         elif distributore == "Artist First":
