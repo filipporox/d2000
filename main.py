@@ -49,6 +49,8 @@ class AppRoyalties(tk.Tk):
 
         self.distributore_label = ttk.Label(self, text="Seleziona distributore:")
         self.distributore_label.grid(row=1, column=0, padx=10, pady=10, sticky="w")
+        self.distributore_var = tk.StringVar(self)
+
 
         self.semestre_label = ttk.Label(self, text="Semestre:")
         self.semestre_label.grid(row=5, column=0, pady=5, sticky="e")
@@ -90,7 +92,7 @@ class AppRoyalties(tk.Tk):
         if self.distributore_var.get() == "Fuga Music":
             self.df_master, self.artisti_percentuali = distributori.importa_dati_fuga(file_path, self.df_master, self.artisti_percentuali)
  
-         if not file_path or not distributore:
+        if not file_path or not distributore:
             messagebox.showerror("Errore", "Seleziona un file CSV e un distributore.")
             return
 
